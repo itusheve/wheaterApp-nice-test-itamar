@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <a [routerLink]="'./history'"><h3>Search History</h3></a>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="">Search By</label>
+          <select class="form-control" [(ngModel)]="selectedSearch">
+            <option [ngValue]="1">User Coordinates</option>
+            <option [ngValue]="2">Location Name</option>
+          </select>
+        </div>
+        <div class="col-sm-8" *ngIf="selectedSearch===2">
+          <label for="">Location Name</label>
+          <app-auto-complete (onChange)="onLocationChanged($event)"></app-auto-complete>
+        </div>
+        <div class="col-sm-12">
+          <hr>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-primary" [disabled]="selectedSearch==2 && !location" (click)="getWeather()">Get
+              Weather
+            </button>
+            <div class="btn-group ml-auto" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-secondary" (click)="tempFormat='C'">Celsius</button>
+              <button type="button" class="btn btn-secondary" (click)="tempFormat='F'">Fahrenhite</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Coords</th>
+      <th scope="col">Time Date</th>
+      <th scope="col">Temperature</th>
+      <th scope="col">Icon</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="weather">
+      <td>{{weather.coord.lon}}/{{weather.coord.lat}}</td>
+      <td>{{curDate | date:'dd/MM/yyyy HH:ss'}}</td>
+      <td>{{weather.main.temp | temperature:tempFormat}} {{tempFormat}}</td>
+      <td>
+        <app-weather-icon [temp]="weather.main.temp"></app-weather-icon>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

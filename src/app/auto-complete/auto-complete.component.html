@@ -1,0 +1,6 @@
+<input [(ngModel)]="selected" id="acId"
+       (typeaheadOnSelect)="onChange.emit(selected)"
+       (typeaheadNoResults)="typeaheadNoResults($event)"
+       [typeahead]="states"
+       class="form-control">
+<div class="alert alert-danger" *ngIf="noResult">No Results Found</div>

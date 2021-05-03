@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Weather History <a [routerLink]="['/']">Get Weather</a>
+    </div>
+
+    <div class="card-body">
+      <div class="text-center">
+        <input type="text" class="form-control my-2" placeholder="search by location name" [(ngModel)]="search" style="width: 500px;margin: auto">
+      </div>
+      <table class="table" *ngIf="history">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Coords</th>
+          <th scope="col">Location Name</th>
+          <th scope="col">Time Date</th>
+          <th scope="col">Temperature C</th>
+          <th scope="col">Icon</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of history | filter:'name':search">
+          <td>{{row.coord.lon}}/{{row.coord.lat}}</td>
+          <td><b>{{row.name}}</b></td>
+          <td>{{row.dt * 1000 | date:'dd/MM/yyyy HH:ss'}}</td>
+          <td>{{row.main.temp | temperature:'C'}}</td>
+          <td>
+            <app-weather-icon [temp]="row.main.temp"></app-weather-icon>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
